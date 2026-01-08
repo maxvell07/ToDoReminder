@@ -7,12 +7,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import malok.todoreminder.features.listTasks.domain.ListRepository
 import malok.todoreminder.features.listTasks.presentation.model.Item
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
 import malok.todoreminder.features.listTasks.presentation.model.ListUiState
 
 
-class ListViewModel : ViewModel() {
+class ListViewModel(
+    repository: ListRepository
+) : ViewModel() {
 
     private val _effect = MutableSharedFlow<ListEffect>(
         replay = 0,

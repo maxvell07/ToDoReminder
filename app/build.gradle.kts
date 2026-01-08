@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.3.0"
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -46,6 +47,18 @@ android {
 }
 
 dependencies {
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+// Koin (через BOM — версии подтянутся автоматически)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("androidx.navigation:navigation-compose:2.9.6")
     implementation(libs.androidx.core.ktx)
