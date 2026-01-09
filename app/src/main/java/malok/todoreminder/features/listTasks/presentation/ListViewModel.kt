@@ -7,11 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import malok.todoreminder.domain.Task
 import malok.todoreminder.features.listTasks.domain.ListRepository
-import malok.todoreminder.features.listTasks.presentation.model.Item
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
 import malok.todoreminder.features.listTasks.presentation.model.ListUiState
-
 
 class ListViewModel(
     repository: ListRepository
@@ -42,10 +41,23 @@ class ListViewModel(
         }
     }
 
-    fun sendEffect() {
+    fun onFloatButtonClick() {
         viewModelScope.launch {
-            _effect.emit(ListEffect.ShowError("Effect -_-"))
+            _effect.emit(ListEffect.OpenCreateTask())
         }
+    }
+
+    fun onTaskChecked(id: String, checked: Boolean) {
+        val updatedTasks = _state.value.tasks.map { task ->
+            if (task.id == id.toLong()) {
+                task.copy(isDone = checked)
+            } else {
+                task
+            }
+        }
+        _state.value = _state.value.copy(
+            tasks = updatedTasks
+        )
     }
 
     fun loadTasks() {
@@ -54,9 +66,9 @@ class ListViewModel(
             try {
                 //delay(5000)
                 val list = listOf(
-                    Item("1", "task1"),
-                    Item("2", "task2"),
-                    Item("3", "task3")
+                    Task(1L, "task1", description = "", isDone = false, createdAt = 1L),
+                    Task(2L, "task2", description = "", isDone = false, createdAt = 1L),
+                    Task(3L, "task3", description = "", isDone = false, createdAt = 1L)
                 )
                 _state.value = ListUiState(tasks = list, isLoading = false, error = null)
             } catch (e: Exception) {
@@ -65,5 +77,4 @@ class ListViewModel(
             }
         }
     }
-
 }

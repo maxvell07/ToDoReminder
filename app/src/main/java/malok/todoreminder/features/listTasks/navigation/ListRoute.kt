@@ -9,5 +9,8 @@ sealed interface ListRoute {
     data object ListScreen : ListRoute
 
     @Serializable
-    data class DetailsScreen(val id: String) : ListRoute
+    data class DetailScreen(val id: String) : ListRoute
+
+    @Serializable
+    class CreateScreen() : ListRoute
 }

@@ -9,5 +9,5 @@ data class TaskEntity(
     val title: String,
     val description: String,
     val isDone: Boolean = false,
-    val createdAt: Long
+    val createdAt: Long = System.currentTimeMillis()
 )
