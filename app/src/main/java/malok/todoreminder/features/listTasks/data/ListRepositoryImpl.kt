@@ -1,6 +1,8 @@
 package malok.todoreminder.features.listTasks.data
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import malok.todoreminder.data.db.TaskDao
 import malok.todoreminder.data.mappers.toDomain
@@ -14,6 +16,6 @@ class ListRepositoryImpl(
     override fun observeTasks(): Flow<List<Task>> =
         dao.observeTasks().map { list ->
             list.map { it.toDomain() }
-        }
+        }.flowOn(Dispatchers.Default)
 
 }

@@ -84,7 +84,7 @@ fun ListScreen(
                 ) {
                     items(
                         items = state.value.tasks,
-                        key = { it.id } // важно для правильно стейта checkbox
+                        key = { it.id!! } // важно для правильно стейта checkbox
                     ) { task ->
                         ListItem(
                             task = task,

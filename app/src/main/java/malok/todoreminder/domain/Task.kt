@@ -1,9 +1,9 @@
 package malok.todoreminder.domain
 
 data class Task(
-    val id: Long,
+    val id: Long?=null,
     val title: String,
     val description: String,
     val isDone: Boolean = false,
-    val createdAt: Long
+    val date: Long
 )

@@ -7,13 +7,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import malok.todoreminder.domain.Task
 import malok.todoreminder.features.listTasks.domain.ListRepository
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
 import malok.todoreminder.features.listTasks.presentation.model.ListUiState
 
 class ListViewModel(
-    repository: ListRepository
+    private val repository: ListRepository
 ) : ViewModel() {
 
     private val _effect = MutableSharedFlow<ListEffect>(
@@ -32,7 +31,7 @@ class ListViewModel(
     val state = _state.asStateFlow()
 
     init {
-        loadTasks()
+        observeTasks()
     }
 
     fun onItemClick(id: String) {
@@ -59,21 +58,15 @@ class ListViewModel(
             tasks = updatedTasks
         )
     }
-
-    fun loadTasks() {
+    private fun observeTasks() {
         viewModelScope.launch {
-            _state.value = ListUiState(tasks = emptyList(), isLoading = true, error = null)
+            _state.value = ListUiState(tasks =emptyList(), isLoading = true,error = null)
             try {
-                //delay(5000)
-                val list = listOf(
-                    Task(1L, "task1", description = "", isDone = false, createdAt = 1L),
-                    Task(2L, "task2", description = "", isDone = false, createdAt = 1L),
-                    Task(3L, "task3", description = "", isDone = false, createdAt = 1L)
-                )
-                _state.value = ListUiState(tasks = list, isLoading = false, error = null)
-            } catch (e: Exception) {
-                _state.value = ListUiState(tasks = emptyList(), isLoading = false, error = "ERROR")
-                _effect.emit(ListEffect.ShowError("ERROR -_-${e.message}"))
+                repository.observeTasks().collect { tasks ->
+                    _state.value = ListUiState(tasks =tasks, isLoading = false,error = null)
+                }
+            } catch (e: Exception){
+                _state.value = ListUiState(tasks =emptyList(), isLoading = false,error = e.message)
             }
         }
     }

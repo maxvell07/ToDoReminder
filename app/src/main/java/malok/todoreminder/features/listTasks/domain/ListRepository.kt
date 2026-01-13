@@ -5,5 +5,4 @@ import malok.todoreminder.domain.Task
 
 interface ListRepository {
     fun observeTasks(): Flow<List<Task>>
-   // suspend fun getTaskById(id: Long): Task
 }
