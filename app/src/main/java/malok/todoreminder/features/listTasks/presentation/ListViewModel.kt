@@ -2,6 +2,7 @@ package malok.todoreminder.features.listTasks.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,7 +25,7 @@ class ListViewModel(
     private val _state = MutableStateFlow<ListUiState>(
         ListUiState(
             tasks = emptyList(),
-            isLoading = false,
+            isLoading = true,
             error = null
         )
     )
@@ -47,26 +48,21 @@ class ListViewModel(
     }
 
     fun onTaskChecked(id: String, checked: Boolean) {
-        val updatedTasks = _state.value.tasks.map { task ->
-            if (task.id == id.toLong()) {
-                task.copy(isDone = checked)
-            } else {
-                task
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateStatus(id.toLong(), checked)
         }
-        _state.value = _state.value.copy(
-            tasks = updatedTasks
-        )
     }
+
     private fun observeTasks() {
         viewModelScope.launch {
-            _state.value = ListUiState(tasks =emptyList(), isLoading = true,error = null)
+            _state.value = ListUiState(tasks = emptyList(), isLoading = true, error = null)
             try {
                 repository.observeTasks().collect { tasks ->
-                    _state.value = ListUiState(tasks =tasks, isLoading = false,error = null)
+                    _state.value = ListUiState(tasks = tasks, isLoading = false, error = null)
                 }
-            } catch (e: Exception){
-                _state.value = ListUiState(tasks =emptyList(), isLoading = false,error = e.message)
+            } catch (e: Exception) {
+                _state.value =
+                    ListUiState(tasks = emptyList(), isLoading = false, error = e.message)
             }
         }
     }

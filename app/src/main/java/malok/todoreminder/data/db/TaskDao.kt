@@ -9,6 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
+    @Query("SELECT * FROM tasks WHERE id = :id")
+    fun observeTaskById(id: Long): Flow<TaskEntity>
+
+
     @Query("SELECT * FROM tasks")
     fun observeTasks(): Flow<List<TaskEntity>>
 
@@ -17,4 +21,10 @@ interface TaskDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun createTask(task: TaskEntity)
+
+    @Query("UPDATE tasks SET isDone = :isDone WHERE id = :taskId")
+    suspend fun updateTaskDone(
+        taskId: Long,
+        isDone: Boolean
+    )
 }

@@ -1,6 +1,9 @@
 package malok.todoreminder.features.detail.data
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import malok.todoreminder.data.db.TaskDao
 import malok.todoreminder.data.mappers.toDomain
@@ -13,6 +16,14 @@ class DetailRepositoryImpl(
 
     override suspend fun getTaskById(id: Long): Task? = withContext(Dispatchers.IO) {
         dao.getTaskById(id)?.toDomain()
+    }
+
+    override fun observeTaskById(id: Long):Flow<Task> = dao.observeTaskById(id).map { it.toDomain() }
+        .flowOn(Dispatchers.IO)
+
+
+    override suspend fun updateStatus(id: Long, check: Boolean) {
+        dao.updateTaskDone(id,check)
     }
 
 }

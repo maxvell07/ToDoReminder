@@ -18,4 +18,7 @@ class ListRepositoryImpl(
             list.map { it.toDomain() }
         }.flowOn(Dispatchers.Default)
 
+    override suspend fun updateStatus(id: Long, check: Boolean) {
+        dao.updateTaskDone(id,check)
+    }
 }

@@ -5,4 +5,6 @@ import malok.todoreminder.domain.Task
 
 interface ListRepository {
     fun observeTasks(): Flow<List<Task>>
+
+    suspend fun updateStatus(id: Long, check: Boolean)
 }
