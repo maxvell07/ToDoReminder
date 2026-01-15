@@ -2,14 +2,15 @@ package malok.todoreminder.features.listTasks.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import malok.todoreminder.features.listTasks.domain.ListRepository
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
+import malok.todoreminder.features.listTasks.presentation.model.ListIntent
 import malok.todoreminder.features.listTasks.presentation.model.ListUiState
 
 class ListViewModel(
@@ -32,38 +33,46 @@ class ListViewModel(
     val state = _state.asStateFlow()
 
     init {
-        observeTasks()
+        onIntent(ListIntent.LoadTasks)
+    }
+    fun onIntent(intent: ListIntent) {
+        when (intent) {
+            is ListIntent.LoadTasks -> loadTasks()
+            is ListIntent.ItemClicked -> openDetails(intent.id)
+            is ListIntent.AddButtonClicked -> openCreateScreen()
+            is ListIntent.TaskChecked -> updateTask(intent.id.toLong(), intent.checked)
+        }
     }
 
-    fun onItemClick(id: String) {
+    private fun loadTasks() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+            try {
+                repository.observeTasks().collect { tasks ->
+                    _state.update { it.copy(tasks = tasks, isLoading = false) }
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(tasks = emptyList(), isLoading = false, error = e.message) }
+                _effect.emit(ListEffect.ShowError(e.message ?: "Unknown error"))
+            }
+        }
+    }
+
+    private fun openDetails(id: String) {
         viewModelScope.launch {
             _effect.emit(ListEffect.OpenDetails(id))
         }
     }
 
-    fun onFloatButtonClick() {
+    private fun openCreateScreen() {
         viewModelScope.launch {
             _effect.emit(ListEffect.OpenCreateTask())
         }
     }
 
-    fun onTaskChecked(id: String, checked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateStatus(id.toLong(), checked)
-        }
-    }
-
-    private fun observeTasks() {
+    private fun updateTask(id: Long, checked: Boolean) {
         viewModelScope.launch {
-            _state.value = ListUiState(tasks = emptyList(), isLoading = true, error = null)
-            try {
-                repository.observeTasks().collect { tasks ->
-                    _state.value = ListUiState(tasks = tasks, isLoading = false, error = null)
-                }
-            } catch (e: Exception) {
-                _state.value =
-                    ListUiState(tasks = emptyList(), isLoading = false, error = e.message)
-            }
+            repository.updateStatus(id, checked)
         }
     }
 }

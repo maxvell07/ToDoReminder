@@ -2,7 +2,6 @@ package malok.todoreminder.features.listTasks.presentation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +26,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import malok.todoreminder.features.listTasks.presentation.ListViewModel
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
+import malok.todoreminder.features.listTasks.presentation.model.ListIntent
 import org.koin.androidx.compose.koinViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +36,8 @@ fun ListScreen(
     onFloatButtonClick: () -> Unit,
     viewModel: ListViewModel = koinViewModel()
 ) {
-    val state = viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
 
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -65,17 +66,16 @@ fun ListScreen(
 
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.onFloatButtonClick() }) {
+            FloatingActionButton(onClick = { viewModel.onIntent(ListIntent.AddButtonClicked) }) {
                 Text(text = "Add")
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
-            ) {
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -83,21 +83,20 @@ fun ListScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(
-                        items = state.value.tasks,
-                        key = { it.id!! } // важно для правильно стейта checkbox
+                        items = state.tasks,
+                        key = { it.id!! }
                     ) { task ->
                         ListItem(
                             task = task,
-                            onItemClick = { viewModel.onItemClick(it) },
+                            onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(it)) },
                             onCheckedChange = { id, checked ->
-                                viewModel.onTaskChecked(id, checked)
+                                viewModel.onIntent(ListIntent.TaskChecked(id, checked))
                             }
                         )
                     }
                 }
-            }
 
-            if (state.value.isLoading) {
+            if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)

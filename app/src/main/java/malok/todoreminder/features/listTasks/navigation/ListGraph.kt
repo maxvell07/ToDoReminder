@@ -21,6 +21,7 @@ fun NavGraphBuilder.listGraph(
             }
         )
     }
+
     composable<ListRoute.DetailScreen> { backStackEntry ->
         val route = backStackEntry.toRoute<ListRoute.DetailScreen>()
         DetailScreen(
@@ -28,8 +29,8 @@ fun NavGraphBuilder.listGraph(
             onBack = { navController.popBackStack() }
         )
     }
-    composable<ListRoute.CreateScreen> { backStackEntry ->
-        val route = backStackEntry.toRoute<ListRoute.CreateScreen>()
+
+    composable<ListRoute.CreateScreen> {
         CreateScreen(
             onBack = { navController.popBackStack() }
         )

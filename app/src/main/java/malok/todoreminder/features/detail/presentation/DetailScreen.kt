@@ -15,11 +15,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import malok.todoreminder.features.detail.presentation.model.DetailIntent
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,10 +30,10 @@ fun DetailScreen(
     viewModel: DetailViewModel = koinViewModel(),
     onBack: () -> Unit
 ) {
-    val task by viewModel.state.collectAsState()
-
+    val task by viewModel.state.collectAsStateWithLifecycle()
+//    val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(id) {
-        viewModel.observeTask(id.toLong())
+        viewModel.onIntent(DetailIntent.LoadTask(id.toLong()))
     }
 
     Scaffold(
@@ -66,7 +67,7 @@ fun DetailScreen(
                     )
                 }
 
-                task.task != null -> {
+                task.task.id != null -> {
                     val task = task.task
                     Column(
                         modifier = Modifier
@@ -75,16 +76,16 @@ fun DetailScreen(
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = "Task: ${task?.title}",
+                                text = "Task: ${task.title}",
                                 modifier = Modifier.weight(1f)
                             )
                             Checkbox(
-                                checked = task?.isDone ?: false,
-                                onCheckedChange = { viewModel.onTaskChecked(task?.id, it) }
+                                checked = task.isDone,
+                                onCheckedChange = { viewModel.onIntent(DetailIntent.TaskChecked(task.id!!, it)) }
                             )
                         }
                         Spacer(modifier = Modifier.padding(12.dp))
-                        Text(text = "Description: ${task?.description}")
+                        Text(text = "Description: ${task.description}")
                     }
                 }
             }

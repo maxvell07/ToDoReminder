@@ -4,6 +4,6 @@ import malok.todoreminder.domain.Task
 
 data class DetailUiState(
     val isLoading: Boolean = false,
-    val task: Task? = null,
+    val task: Task = Task(),
     val error: String? = null
 )
