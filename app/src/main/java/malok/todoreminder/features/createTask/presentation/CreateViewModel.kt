@@ -3,16 +3,24 @@ package malok.todoreminder.features.createTask.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import malok.todoreminder.domain.Task
 import malok.todoreminder.features.createTask.domain.CreateRepository
 import malok.todoreminder.features.createTask.presentation.model.CreateEffect
 import malok.todoreminder.features.createTask.presentation.model.CreateIntent
+import malok.todoreminder.features.createTask.presentation.model.CreateUiState
 
 class CreateViewModel(
     private val repository: CreateRepository
 ) : ViewModel() {
+
+    private val _state = MutableStateFlow(CreateUiState(isLoading = false, task = Task(date = System.currentTimeMillis())))
+    val state: StateFlow<CreateUiState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<CreateEffect>(
         replay = 0,
@@ -23,17 +31,47 @@ class CreateViewModel(
 
     fun onIntent(intent: CreateIntent) {
         when (intent) {
-            is CreateIntent.CreateTask -> createTask(intent.task)
+            is CreateIntent.CreateTask -> createTask()
+            is CreateIntent.TitleChanged ->
+                updateTask { it.copy(title = intent.value) }
+
+            is CreateIntent.DescriptionChanged ->
+                updateTask { it.copy(description = intent.value) }
+
+            is CreateIntent.TimeChanged ->
+                updateTask { it.copy(date = intent.value) }
         }
     }
 
-    private fun createTask(task: Task) {
+    private fun updateTask(
+        reducer: (Task) -> Task
+    ) {
+        _state.update {
+            it.copy(task = reducer(it.task))
+        }
+    }
+
+    private fun createTask() {
+
         viewModelScope.launch {
+            val task = state.value.task
+
+            if (task.title.isBlank()) {
+                _state.update { it.copy(error = "Title is empty") }
+                return@launch
+            }
+
+            _state.update { it.copy(isLoading = true, error = null) }
+
             try {
                 repository.createTask(task)
                 _effect.emit(CreateEffect.TaskCreated)
             } catch (e: Exception) {
-                _effect.emit(CreateEffect.ShowError(e.message ?: "Error creating task"))
+                _state.update {
+                    it.copy(error = e.message ?: "Create failed")
+                }
+            } finally {
+                _state.update { it.copy(isLoading = false) }
             }
         }
     }

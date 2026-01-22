@@ -1,7 +1,8 @@
 package malok.todoreminder.features.createTask.presentation.model
 
-import malok.todoreminder.domain.Task
-
 sealed interface CreateIntent {
-    data class CreateTask(val task: Task): CreateIntent
+    data class TitleChanged(val value: String) : CreateIntent
+    data class DescriptionChanged(val value: String) : CreateIntent
+    data class TimeChanged(val value: Long) : CreateIntent
+    object  CreateTask: CreateIntent
 }

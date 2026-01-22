@@ -16,6 +16,7 @@ import malok.todoreminder.features.detail.presentation.model.DetailIntent
 import malok.todoreminder.features.detail.presentation.model.DetailUiState
 
 class DetailViewModel(
+    id: String,
     private val repository: DetailRepository
 ) : ViewModel() {
 
@@ -25,10 +26,16 @@ class DetailViewModel(
     private val _effect = MutableSharedFlow<DetailEffect>()
     val effect = _effect.asSharedFlow()
 
+    init {
+        loadTask(id.toLong())
+    }
+
     fun onIntent(intent: DetailIntent) {
         when (intent) {
             is DetailIntent.LoadTask -> loadTask(intent.id)
             is DetailIntent.TaskChecked -> updateTask(intent.id, intent.checked)
+            is DetailIntent.DeleteTask -> deleteTask(id = intent.id)
+            is DetailIntent.EditClicked -> openEditScreen(id = intent.id)
         }
     }
 
@@ -54,11 +61,23 @@ class DetailViewModel(
         }
     }
 
+    private fun openEditScreen(id: String) {
+        viewModelScope.launch {
+            _effect.emit(DetailEffect.OpenEditScreen(id))
+        }
+    }
+
     private fun updateTask(id: Long, checked: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 repository.updateStatus(id, checked)
             }
+        }
+    }
+
+    fun deleteTask(id: Long) {
+        viewModelScope.launch {
+            repository.deleteTask(id)
         }
     }
 }

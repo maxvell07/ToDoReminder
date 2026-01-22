@@ -1,4 +1,4 @@
-package malok.todoreminder.features.listTasks.presentation.ui
+package malok.todoreminder.features.listTasks.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,15 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import malok.todoreminder.features.listTasks.presentation.ListViewModel
 import malok.todoreminder.features.listTasks.presentation.model.ListEffect
 import malok.todoreminder.features.listTasks.presentation.model.ListIntent
+import malok.todoreminder.features.listTasks.presentation.ui.ListItem
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
     onItemClick: (String) -> Unit,
+    onEditClick: (String) -> Unit,
     onFloatButtonClick: () -> Unit,
     viewModel: ListViewModel = koinViewModel()
 ) {
@@ -46,6 +47,8 @@ fun ListScreen(
             when (effect) {
                 is ListEffect.OpenDetails ->
                     onItemClick(effect.id)
+                is ListEffect.OpenEditScreen ->
+                    onEditClick(effect.id)
                 is ListEffect.OpenCreateTask ->
                     onFloatButtonClick()
                 is ListEffect.ShowError -> {
@@ -89,6 +92,7 @@ fun ListScreen(
                         ListItem(
                             task = task,
                             onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(it)) },
+                            onEditClick = {viewModel.onIntent(ListIntent.EditClicked(it))},
                             onCheckedChange = { id, checked ->
                                 viewModel.onIntent(ListIntent.TaskChecked(id, checked))
                             }

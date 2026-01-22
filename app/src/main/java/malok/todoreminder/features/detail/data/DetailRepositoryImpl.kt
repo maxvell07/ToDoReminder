@@ -26,4 +26,8 @@ class DetailRepositoryImpl(
         dao.updateTaskDone(id,check)
     }
 
+    override suspend fun deleteTask(id: Long) = withContext(Dispatchers.IO) {
+        dao.deleteTaskById(id)
+    }
+
 }

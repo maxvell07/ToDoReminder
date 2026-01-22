@@ -10,6 +10,9 @@ import malok.todoreminder.features.listTasks.domain.ListRepository
 import malok.todoreminder.features.detail.data.DetailRepositoryImpl
 import malok.todoreminder.features.detail.domain.DetailRepository
 import malok.todoreminder.features.detail.presentation.DetailViewModel
+import malok.todoreminder.features.editTask.data.EditRepositoryImpl
+import malok.todoreminder.features.editTask.domain.EditRepository
+import malok.todoreminder.features.editTask.presentation.EditViewModel
 import malok.todoreminder.features.listTasks.presentation.ListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -41,6 +44,10 @@ val appModule = module {
         DetailRepositoryImpl(get())
     }
 
+    single<EditRepository> {
+        EditRepositoryImpl(get())
+    }
+
     // ViewModel
     viewModel {
         ListViewModel(
@@ -53,9 +60,16 @@ val appModule = module {
             repository = get()
         )
     }
+    viewModel { (taskId: String) ->
+        EditViewModel(
+            id = taskId,
+            repository = get(),
+        )
+    }
 
-    viewModel {
+    viewModel { (taskId: String) ->
         DetailViewModel(
+            id = taskId,
             repository = get()
         )
     }

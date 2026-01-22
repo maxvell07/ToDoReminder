@@ -11,5 +11,6 @@ interface DetailRepository {
 
     suspend fun updateStatus(id: Long, check: Boolean)
 
+    suspend fun deleteTask(id: Long)
 
 }

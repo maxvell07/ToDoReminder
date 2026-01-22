@@ -39,6 +39,7 @@ class ListViewModel(
         when (intent) {
             is ListIntent.LoadTasks -> loadTasks()
             is ListIntent.ItemClicked -> openDetails(intent.id)
+            is ListIntent.EditClicked -> openEditScreen(intent.id)
             is ListIntent.AddButtonClicked -> openCreateScreen()
             is ListIntent.TaskChecked -> updateTask(intent.id.toLong(), intent.checked)
         }
@@ -61,6 +62,12 @@ class ListViewModel(
     private fun openDetails(id: String) {
         viewModelScope.launch {
             _effect.emit(ListEffect.OpenDetails(id))
+        }
+    }
+
+    private fun openEditScreen(id: String) {
+        viewModelScope.launch {
+            _effect.emit(ListEffect.OpenEditScreen(id))
         }
     }
 

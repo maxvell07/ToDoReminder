@@ -1,7 +1,8 @@
-package malok.todoreminder.features.createTask.presentation
+package malok.todoreminder.features.editTask.presentation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,52 +10,58 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import malok.todoreminder.features.createTask.presentation.model.CreateEffect
-import malok.todoreminder.features.createTask.presentation.model.CreateIntent
+import malok.todoreminder.features.editTask.presentation.model.EditEffect
+import malok.todoreminder.features.editTask.presentation.model.EditIntent
 import malok.todoreminder.presentation.TaskFormContent
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
-fun CreateScreen(
+fun EditTaskScreen(
+    id: String,
     onBack: () -> Unit,
-    viewModel: CreateViewModel = koinViewModel()
+    viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
 ) {
-
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
+
+
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is CreateEffect.ShowError -> {
+                is EditEffect.TaskSaved -> onBack()
+                is EditEffect.ShowError ->
                     snackBarHostState.showSnackbar(effect.message)
-                }
-                is CreateEffect.TaskCreated -> {
-                    onBack()
-                }
             }
         }
     }
+
     Scaffold(
-        snackbarHost = { androidx.compose.material3.SnackbarHost(snackBarHostState) }
+        snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { innerPadding ->
-        val state by viewModel.state.collectAsStateWithLifecycle()
+
+        if (state.isLoading) {
+            //
+            return@Scaffold
+        }
 
         TaskFormContent(
             modifier = Modifier.padding(innerPadding),
             title = state.task.title,
             description = state.task.description,
             time = state.task.date,
-            buttonText = "Create",
+            buttonText = "Save",
             onTitleChange = {
-                viewModel.onIntent(CreateIntent.TitleChanged(it))
+                viewModel.onIntent(EditIntent.TitleChanged(it))
             },
             onDescriptionChange = {
-                viewModel.onIntent(CreateIntent.DescriptionChanged(it))
+                viewModel.onIntent(EditIntent.DescriptionChanged(it))
             },
             onTimeChange = {
-                viewModel.onIntent(CreateIntent.TimeChanged(it))
+                viewModel.onIntent(EditIntent.TimeChanged(it))
             },
             onSubmit = {
-                viewModel.onIntent(CreateIntent.CreateTask)
+                viewModel.onIntent(EditIntent.SaveTask)
             }
         )
     }
