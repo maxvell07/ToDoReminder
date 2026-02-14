@@ -17,9 +17,6 @@ fun NavGraphBuilder.listGraph(
             onItemClick = { id ->
                 navController.navigate(ListRoute.DetailScreen(id))
             },
-            onEditClick = {id ->
-                navController.navigate(ListRoute.DetailScreen(id))
-            },
             onFloatButtonClick = {
                 navController.navigate(ListRoute.CreateScreen())
             }

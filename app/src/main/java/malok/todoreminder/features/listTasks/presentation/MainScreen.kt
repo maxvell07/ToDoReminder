@@ -37,7 +37,6 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen(
     onItemClick: (String) -> Unit,
-    onEditClick: (String) -> Unit,
     onFloatButtonClick: () -> Unit,
     viewModel: ListViewModel = koinViewModel()
 ) {
@@ -50,9 +49,6 @@ fun ListScreen(
             when (effect) {
                 is ListEffect.OpenDetails ->
                     onItemClick(effect.id)
-
-                is ListEffect.OpenEditScreen ->
-                    onEditClick(effect.id)
 
                 is ListEffect.OpenCreateTask ->
                     onFloatButtonClick()
@@ -115,7 +111,6 @@ fun ListScreen(
                             ListItem(
                                 task = task,
                                 onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(task.id.toString())) },
-                                onEditClick = { viewModel.onIntent(ListIntent.EditClicked(task.id.toString()))},
                                 onCheckedChange = { id, checked -> viewModel.onIntent(ListIntent.TaskChecked(id, checked))}
                             )
                         }
