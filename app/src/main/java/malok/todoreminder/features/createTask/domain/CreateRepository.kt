@@ -1,6 +1,7 @@
 package malok.todoreminder.features.createTask.domain
 
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
+
 
 interface CreateRepository {
 

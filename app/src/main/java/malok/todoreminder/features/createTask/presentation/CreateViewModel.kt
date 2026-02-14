@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
 import malok.todoreminder.features.createTask.domain.CreateRepository
 import malok.todoreminder.features.createTask.presentation.model.CreateEffect
 import malok.todoreminder.features.createTask.presentation.model.CreateIntent

@@ -2,10 +2,10 @@ package malok.todoreminder.features.editTask.data
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import malok.testtask.core.domain.Task
 import malok.todoreminder.data.db.TaskDao
 import malok.todoreminder.data.mappers.toDomain
 import malok.todoreminder.data.mappers.toEntity
-import malok.todoreminder.domain.Task
 import malok.todoreminder.features.editTask.domain.EditRepository
 
 class EditRepositoryImpl(

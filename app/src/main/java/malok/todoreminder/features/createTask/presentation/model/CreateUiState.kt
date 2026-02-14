@@ -1,6 +1,7 @@
 package malok.todoreminder.features.createTask.presentation.model
 
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
+
 
 data class CreateUiState(
     val task: Task = Task(),

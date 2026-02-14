@@ -1,4 +1,4 @@
-package malok.todoreminder.domain
+package malok.testtask.core.domain
 
 data class Task(
     val id: Long?=null,

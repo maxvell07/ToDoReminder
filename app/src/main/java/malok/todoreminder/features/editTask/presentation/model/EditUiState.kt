@@ -1,6 +1,7 @@
 package malok.todoreminder.features.editTask.presentation.model
 
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
+
 
 data class EditUiState(
     val task: Task = Task(),

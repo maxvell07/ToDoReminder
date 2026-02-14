@@ -1,6 +1,7 @@
 package malok.todoreminder.features.editTask.domain
 
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
+
 
 interface EditRepository {
     suspend fun getTaskById(taskId: Long): Task

@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import malok.testtask.core.domain.Task
 import malok.todoreminder.data.db.TaskDao
 import malok.todoreminder.data.mappers.toDomain
 import malok.todoreminder.features.listTasks.domain.ListRepository
-import malok.todoreminder.domain.Task
 
 class ListRepositoryImpl(
     private val dao: TaskDao

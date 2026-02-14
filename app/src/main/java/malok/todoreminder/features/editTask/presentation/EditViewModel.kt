@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
 import malok.todoreminder.features.editTask.domain.EditRepository
 import malok.todoreminder.features.editTask.presentation.model.EditEffect
 import malok.todoreminder.features.editTask.presentation.model.EditIntent

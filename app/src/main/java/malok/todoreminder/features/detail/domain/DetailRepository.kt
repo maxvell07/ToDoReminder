@@ -1,7 +1,7 @@
 package malok.todoreminder.features.detail.domain
 
 import kotlinx.coroutines.flow.Flow
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
 
 interface DetailRepository {
 

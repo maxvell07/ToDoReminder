@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import malok.testtask.core.domain.Task
 import malok.todoreminder.data.db.TaskDao
 import malok.todoreminder.data.mappers.toDomain
-import malok.todoreminder.domain.Task
 import malok.todoreminder.features.detail.domain.DetailRepository
 
 class DetailRepositoryImpl(

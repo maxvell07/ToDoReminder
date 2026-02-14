@@ -1,6 +1,7 @@
 package malok.todoreminder.features.detail.presentation.model
 
-import malok.todoreminder.domain.Task
+import malok.testtask.core.domain.Task
+
 
 data class DetailUiState(
     val isLoading: Boolean = false,

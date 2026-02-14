@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":core_domain"))
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
