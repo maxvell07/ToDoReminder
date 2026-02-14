@@ -27,7 +27,6 @@ import malok.todoreminder.domain.Task
 fun ListItem(
     task: Task,
     onItemClick: (String) -> Unit,
-    onEditClick: (String) -> Unit,
     onCheckedChange: (String, Boolean) -> Unit
 ) {
     Card(
@@ -51,15 +50,6 @@ fun ListItem(
                 text = task.title,
                 style = MaterialTheme.typography.bodyLarge
             )
-            IconButton(
-                onClick = { onEditClick(task.id.toString()) }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit Task"
-                )
-            }
-
             Spacer(modifier = Modifier.width(8.dp))
 
             Checkbox(
