@@ -18,7 +18,7 @@ fun NavGraphBuilder.listGraph(
                 navController.navigate(ListRoute.DetailScreen(id))
             },
             onEditClick = {id ->
-              navController.navigate(ListRoute.EditTaskScreen(id))
+                navController.navigate(ListRoute.DetailScreen(id))
             },
             onFloatButtonClick = {
                 navController.navigate(ListRoute.CreateScreen())
@@ -33,20 +33,20 @@ fun NavGraphBuilder.listGraph(
             onEditClick = { id ->
                 navController.navigate(ListRoute.EditTaskScreen(id))
             },
-            onBack = { navController.popBackStack() }
+            onBack = { navController.navigateUp() }
         )
     }
     composable<ListRoute.EditTaskScreen> { backStackEntry ->
         val route = backStackEntry.toRoute<ListRoute.EditTaskScreen>()
         EditTaskScreen(
             id = route.id,
-            onBack = { navController.popBackStack() }
+            onBack = { navController.navigateUp() }
         )
     }
 
     composable<ListRoute.CreateScreen> {
         CreateScreen(
-            onBack = { navController.popBackStack() }
+            onBack = { navController.navigateUp() }
         )
     }
 }

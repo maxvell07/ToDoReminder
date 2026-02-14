@@ -10,6 +10,7 @@ sealed interface ListRoute {
 
     @Serializable
     data class DetailScreen(val id: String) : ListRoute
+
     @Serializable
     data class EditTaskScreen(val id: String) : ListRoute
 

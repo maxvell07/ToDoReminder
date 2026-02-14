@@ -57,7 +57,8 @@ class CreateViewModel(
             val task = state.value.task
 
             if (task.title.isBlank()) {
-                _state.update { it.copy(error = "Title is empty") }
+                _effect.emit(CreateEffect.EmptyFields("Empty Fields"))
+//                _state.update { it.copy(error = "Title is empty") }
                 return@launch
             }
 
@@ -65,7 +66,7 @@ class CreateViewModel(
 
             try {
                 repository.createTask(task)
-                _effect.emit(CreateEffect.TaskCreated)
+                _effect.emit(CreateEffect.TaskCreated("Task Created"))
             } catch (e: Exception) {
                 _state.update {
                     it.copy(error = e.message ?: "Create failed")

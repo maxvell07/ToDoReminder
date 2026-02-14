@@ -1,4 +1,4 @@
-package malok.todoreminder.features.createTask.presentation.ui
+package malok.todoreminder.presentation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

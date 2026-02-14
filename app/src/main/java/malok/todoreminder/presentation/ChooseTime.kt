@@ -1,4 +1,4 @@
-package malok.todoreminder.features.createTask.presentation.ui
+package malok.todoreminder.presentation
 
 import android.icu.util.Calendar
 import androidx.annotation.StringRes
@@ -43,6 +43,7 @@ import androidx.compose.ui.window.Dialog
 import malok.todoreminder.R
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -243,7 +244,7 @@ fun formatDate(millis: Long): String {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = millis
     val sdf = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
-    sdf.timeZone = java.util.TimeZone.getDefault()
+    sdf.timeZone = TimeZone.getDefault()
     return sdf.format(calendar.time)
 }
 

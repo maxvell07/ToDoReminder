@@ -1,5 +1,7 @@
 package malok.todoreminder.features.createTask.presentation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
@@ -30,6 +32,9 @@ fun CreateScreen(
                 is CreateEffect.TaskCreated -> {
                     onBack()
                 }
+                is CreateEffect.EmptyFields -> {
+                    snackBarHostState.showSnackbar(effect.message)
+                }
             }
         }
     }
@@ -37,25 +42,29 @@ fun CreateScreen(
         snackbarHost = { androidx.compose.material3.SnackbarHost(snackBarHostState) }
     ) { innerPadding ->
         val state by viewModel.state.collectAsStateWithLifecycle()
-
-        TaskFormContent(
-            modifier = Modifier.padding(innerPadding),
-            title = state.task.title,
-            description = state.task.description,
-            time = state.task.date,
-            buttonText = "Create",
-            onTitleChange = {
-                viewModel.onIntent(CreateIntent.TitleChanged(it))
-            },
-            onDescriptionChange = {
-                viewModel.onIntent(CreateIntent.DescriptionChanged(it))
-            },
-            onTimeChange = {
-                viewModel.onIntent(CreateIntent.TimeChanged(it))
-            },
-            onSubmit = {
-                viewModel.onIntent(CreateIntent.CreateTask)
-            }
-        )
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
+            TaskFormContent(
+                title = state.task.title,
+                description = state.task.description,
+                time = state.task.date,
+                buttonText = "Create",
+                onTitleChange = {
+                    viewModel.onIntent(CreateIntent.TitleChanged(it))
+                },
+                onDescriptionChange = {
+                    viewModel.onIntent(CreateIntent.DescriptionChanged(it))
+                },
+                onTimeChange = {
+                    viewModel.onIntent(CreateIntent.TimeChanged(it))
+                },
+                onSubmit = {
+                    viewModel.onIntent(CreateIntent.CreateTask)
+                }
+            )
+        }
     }
 }

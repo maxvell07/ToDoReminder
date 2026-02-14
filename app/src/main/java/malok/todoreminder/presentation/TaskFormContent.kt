@@ -10,12 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import malok.todoreminder.features.createTask.presentation.ui.ChooseTime
-import malok.todoreminder.features.createTask.presentation.ui.TaskForm
 
 @Composable
 fun TaskFormContent(
-    modifier: Modifier = Modifier,
     title: String,
     description: String,
     time: Long,
@@ -26,7 +23,7 @@ fun TaskFormContent(
     onSubmit: () -> Unit
 ) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
     ) {
         TaskForm(

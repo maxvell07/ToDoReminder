@@ -2,14 +2,18 @@ package malok.todoreminder.features.listTasks.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -39,7 +43,6 @@ fun ListScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-
     val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
@@ -47,10 +50,13 @@ fun ListScreen(
             when (effect) {
                 is ListEffect.OpenDetails ->
                     onItemClick(effect.id)
+
                 is ListEffect.OpenEditScreen ->
                     onEditClick(effect.id)
+
                 is ListEffect.OpenCreateTask ->
                     onFloatButtonClick()
+
                 is ListEffect.ShowError -> {
                     snackBarHostState.showSnackbar(
                         message = effect.message
@@ -59,53 +65,62 @@ fun ListScreen(
             }
         }
     }
-
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         topBar = {
             TopAppBar(title = { Text("List Tasks") })
         },
-        bottomBar = {
-
-        },
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.onIntent(ListIntent.AddButtonClicked) }) {
-                Text(text = "Add")
+            FloatingActionButton(
+                onClick = { viewModel.onIntent(ListIntent.AddButtonClicked) }
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Добавить задачу")
             }
         }
     ) { innerPadding ->
+
         Box(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
+                .padding(innerPadding)
         ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(
-                        items = state.tasks,
-                        key = { it.id!! }
-                    ) { task ->
-                        ListItem(
-                            task = task,
-                            onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(it)) },
-                            onEditClick = {viewModel.onIntent(ListIntent.EditClicked(it))},
-                            onCheckedChange = { id, checked ->
-                                viewModel.onIntent(ListIntent.TaskChecked(id, checked))
-                            }
-                        )
-                    }
+            when {
+                state.isLoading -> {
+                    CircularProgressIndicator(
+                        Modifier
+                            .align(Alignment.Center)
+                            .size(56.dp)
+                    )
                 }
 
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(48.dp)
-                )
+                state.tasks.isEmpty() -> {
+                    Text(
+                        text = "Список задач пуст",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 12.dp,
+                            bottom = 88.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(state.tasks) { task ->
+                            ListItem(
+                                task = task,
+                                onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(task.id.toString())) },
+                                onEditClick = { viewModel.onIntent(ListIntent.EditClicked(task.id.toString()))},
+                                onCheckedChange = { id, checked -> viewModel.onIntent(ListIntent.TaskChecked(id, checked))}
+                            )
+                        }
+                    }
+                }
             }
         }
     }
