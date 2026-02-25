@@ -48,6 +48,9 @@ android {
 
 dependencies {
     implementation(project(":core_domain"))
+    implementation(project(":core_data"))
+    implementation(project(":navigation"))
+    implementation(project(":features"))
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

@@ -18,3 +18,6 @@ rootProject.name = "ToDoReminder"
 include(":app")
 include(":core_domain")
 include(":core_data")
+include(":navigation")
+include(":features")
+include(":core_ui")
