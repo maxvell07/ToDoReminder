@@ -14,7 +14,11 @@
             <option value="$PROJECT_DIR$/core_data" />
             <option value="$PROJECT_DIR$/core_domain" />
             <option value="$PROJECT_DIR$/core_ui" />
-            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/create-task" />
+            <option value="$PROJECT_DIR$/feature/detail" />
+            <option value="$PROJECT_DIR$/feature/edit-task" />
+            <option value="$PROJECT_DIR$/feature/list-tasks" />
             <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>

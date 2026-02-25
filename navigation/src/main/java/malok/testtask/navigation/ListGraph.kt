@@ -4,10 +4,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import malok.testtask.features.createTask.presentation.CreateScreen
-import malok.testtask.features.detail.presentation.DetailScreen
-import malok.testtask.features.editTask.presentation.EditTaskScreen
-import malok.testtask.features.listTasks.presentation.ListScreen
+import malok.testtask.create_task.createTask.presentation.CreateScreen
+import malok.testtask.detail.detail.presentation.DetailScreen
+import malok.testtask.edit_task.editTask.presentation.EditTaskScreen
+import malok.testtask.list_tasks.listTasks.presentation.ListScreen
 
 fun NavGraphBuilder.listGraph(
     navController: NavController

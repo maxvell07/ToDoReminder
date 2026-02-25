@@ -51,7 +51,10 @@ dependencies {
     implementation(project(":core_domain"))
     implementation(project(":core_data"))
     implementation(project(":navigation"))
-    implementation(project(":features"))
+    implementation(project(":feature:list-tasks"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:create-task"))
+    implementation(project(":feature:edit-task"))
 
     // Room
     implementation(libs.androidx.room.runtime)

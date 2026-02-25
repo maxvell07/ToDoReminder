@@ -41,7 +41,10 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(project(":features"))
+    implementation(project(":feature:list-tasks"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:create-task"))
+    implementation(project(":feature:edit-task"))
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

@@ -1,10 +1,10 @@
 package malok.todoreminder.di
 
 import android.app.Application
-import malok.testtask.features.createTask.di.createTaskModule
-import malok.testtask.features.detail.di.detailModule
-import malok.testtask.features.editTask.di.editTaskModule
-import malok.testtask.features.listTasks.di.listTasksModule
+import malok.testtask.create_task.createTask.di.createTaskModule
+import malok.testtask.detail.detail.di.detailModule
+import malok.testtask.edit_task.editTask.di.editTaskModule
+import malok.testtask.list_tasks.listTasks.di.listTasksModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
