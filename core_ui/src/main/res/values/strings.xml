@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">ToDoReminder</string>
+    <string name="choose_time">Выберите время</string>
+    <string name="close">Назад</string>
+    <string name="ok">ок</string>
+    <string name="cancel">закрыть</string>
+
+</resources>
