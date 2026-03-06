@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import malok.todoreminder.navigation.AppNavHost
+import malok.testtask.navigation.AppNavHost
 import malok.todoreminder.ui.theme.ToDoReminderTheme
 
 class MainActivity : ComponentActivity() {

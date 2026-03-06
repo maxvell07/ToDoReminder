@@ -16,3 +16,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "ToDoReminder"
 include(":app")
+include(":core_domain")
+include(":core_data")
+include(":navigation")
+include(":core_ui")
+include(":feature:create-task")
+include(":feature:edit-task")
+include(":feature:detail")
+include(":feature:list-tasks")
