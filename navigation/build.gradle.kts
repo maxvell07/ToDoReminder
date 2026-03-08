@@ -45,7 +45,7 @@ dependencies {
     implementation(project(":feature:detail"))
     implementation(project(":feature:create-task"))
     implementation(project(":feature:edit-task"))
-
+    implementation(libs.androidx.compose.animation)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
 

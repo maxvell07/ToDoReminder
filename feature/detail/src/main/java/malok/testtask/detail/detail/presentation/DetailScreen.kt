@@ -74,10 +74,6 @@ fun DetailScreen(
                     viewModel.onIntent(DetailIntent.TaskChecked(taskId, checked))
                 }
             },
-            onDeleteClick = {
-                viewModel.onIntent(DetailIntent.DeleteTask(id = id.toLong()))
-                onBack()
-            },
             onEditClick = {
                 viewModel.onIntent(DetailIntent.EditClicked(id = id))
             },

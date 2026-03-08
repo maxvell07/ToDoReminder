@@ -21,4 +21,8 @@ class EditRepositoryImpl(
         withContext(Dispatchers.IO) {
             dao.updateTask(task.toEntity())
         }
+
+    override suspend fun deleteTask(taskId: Long) = withContext(Dispatchers.IO) {
+        dao.deleteTaskById(taskId)
+    }
 }

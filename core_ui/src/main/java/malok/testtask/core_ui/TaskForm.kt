@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -23,8 +22,7 @@ fun TaskForm(
     description: String,
     onDescriptionChange: (String) -> Unit
 ) {
-
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,

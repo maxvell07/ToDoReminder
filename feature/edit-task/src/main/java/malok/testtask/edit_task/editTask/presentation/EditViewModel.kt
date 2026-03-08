@@ -44,6 +44,8 @@ class EditViewModel(
 
             EditIntent.SaveTask ->
                 saveTask()
+
+            is EditIntent.DeleteTask -> deleteTask(intent.id)
         }
     }
 
@@ -73,6 +75,11 @@ class EditViewModel(
                     )
                 }
             }
+        }
+    }
+    fun deleteTask(id: Long) {
+        viewModelScope.launch {
+            repository.deleteTask(id)
         }
     }
 

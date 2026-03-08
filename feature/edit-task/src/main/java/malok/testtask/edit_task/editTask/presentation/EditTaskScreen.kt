@@ -69,6 +69,10 @@ fun EditTaskScreen(
                 onTitleChange = {
                     viewModel.onIntent(EditIntent.TitleChanged(it))
                 },
+                onDeleteClick = {
+                viewModel.onIntent(EditIntent.DeleteTask(id = id.toLong()))
+                onBack()
+                },
                 onDescriptionChange = {
                     viewModel.onIntent(EditIntent.DescriptionChanged(it))
                 },

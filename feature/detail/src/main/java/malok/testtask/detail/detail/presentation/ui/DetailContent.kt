@@ -1,6 +1,5 @@
 package malok.testtask.detail.detail.presentation.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +24,6 @@ import malok.testtask.detail.detail.presentation.model.DetailUiState
 fun DetailContent(
     state: DetailUiState,
     onTaskCheckedChange: (Boolean) -> Unit,
-    onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -90,19 +87,8 @@ fun DetailContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            .height(48.dp)
                     ) {
-                        Button(
-                            onClick = onDeleteClick,
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text("Delete")
-                        }
-
                         Button(
                             onClick = onEditClick,
                             modifier = Modifier.weight(1f)
@@ -112,7 +98,6 @@ fun DetailContent(
                     }
                 }
             }
-
             else -> {
                 Text(
                     text = "Task not found",

@@ -69,7 +69,7 @@ fun ChooseTime(value: Long, onValueChanged: (Long) -> Unit) {
     Title(R.string.choose_time)
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = Modifier
     ) {
         Text(
             formatDate(value),
@@ -257,7 +257,7 @@ fun Title(@StringRes resourceId: Int) {
         stringResource(resourceId),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(start = 16.dp, top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp)
     )
     }
 }
