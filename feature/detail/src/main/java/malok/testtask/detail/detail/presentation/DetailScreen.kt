@@ -7,16 +7,19 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import malok.testtask.detail.detail.presentation.model.DetailEffect
@@ -35,7 +38,7 @@ fun DetailScreen(
 ) {
     val task by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     LaunchedEffect(id) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
@@ -52,20 +55,35 @@ fun DetailScreen(
     }
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = { Text("Details") },
+                scrollBehavior = scrollBehavior,
+                title = {
+                    Text(
+                        text = "Details",
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
+
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
+        }
     ) { innerPadding ->
        DetailContent(
             state = task,

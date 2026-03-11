@@ -34,7 +34,8 @@ fun DetailContent(
         when {
             state.isLoading -> {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(80.dp),
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -42,7 +43,8 @@ fun DetailContent(
                 Text(
                     text = state.error,
                     modifier = Modifier.padding(24.dp),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error
                 )
             }
 
@@ -54,14 +56,17 @@ fun DetailContent(
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+
                         Text(
                             text = task.title,
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            color = MaterialTheme.colorScheme.onBackground
                         )
 
                         Checkbox(
@@ -74,12 +79,16 @@ fun DetailContent(
 
                     Text(
                         text = "Description:",
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     Text(
                         text = task.description,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
@@ -93,15 +102,20 @@ fun DetailContent(
                             onClick = onEditClick,
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Edit")
+                            Text(
+                                "Edit",
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
                         }
                     }
                 }
             }
+
             else -> {
                 Text(
                     text = "Task not found",
-                    modifier = Modifier.padding(24.dp)
+                    modifier = Modifier.padding(24.dp),
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

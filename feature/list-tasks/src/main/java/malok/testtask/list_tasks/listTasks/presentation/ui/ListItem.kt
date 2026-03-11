@@ -16,9 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import malok.testtask.core.domain.Task
-
 @Composable
 fun ListItem(
     task: Task,
@@ -33,7 +33,9 @@ fun ListItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(2.dp)
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
     ) {
         Row(
             modifier = Modifier
@@ -41,11 +43,20 @@ fun ListItem(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Text(
                 modifier = Modifier.weight(1f),
                 text = task.title,
-                style = MaterialTheme.typography.bodyLarge
+                style =
+                    if (task.isDone)
+                        MaterialTheme.typography.bodyLarge.copy(
+                            textDecoration = TextDecoration.LineThrough
+                        )
+                    else
+                        MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
             )
+
             Spacer(modifier = Modifier.width(8.dp))
 
             Checkbox(
@@ -54,7 +65,9 @@ fun ListItem(
                     onCheckedChange(task.id.toString(), checked)
                 },
                 colors = CheckboxDefaults.colors(
-                    checkedColor = MaterialTheme.colorScheme.primary
+                    checkedColor = MaterialTheme.colorScheme.primary,
+                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    checkmarkColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         }

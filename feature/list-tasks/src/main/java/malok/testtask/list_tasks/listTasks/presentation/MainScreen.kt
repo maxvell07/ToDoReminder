@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -50,7 +52,6 @@ fun ListScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     var selectedTab by remember { mutableStateOf(0) }
     val snackBarHostState = remember { SnackbarHostState() }
-
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
@@ -69,32 +70,48 @@ fun ListScreen(
         }
     }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-        topBar = {
-            TopAppBar(title = { Text("List Tasks") })
+        containerColor = MaterialTheme.colorScheme.background,
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState)
         },
+
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        "List Tasks",
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
+            )
+        },
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onIntent(ListIntent.AddButtonClicked) },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .size(50.dp)
                     .offset(y = 42.dp)
             ) {
                 Icon(
                     Icons.Default.Add,
-                    contentDescription = "Добавить задачу",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    contentDescription = "Добавить задачу"
                 )
             }
         },
+
         floatingActionButtonPosition = FabPosition.Center,
+
         bottomBar = {
             CustomBottomNavBar(
                 selectedItem = selectedTab,
                 onItemSelected = { selectedTab = it }
-
             )
         }
     ) { innerPadding ->
@@ -107,7 +124,8 @@ fun ListScreen(
             when {
                 state.isLoading -> {
                     CircularProgressIndicator(
-                        Modifier
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
                             .align(Alignment.Center)
                             .size(56.dp)
                     )
@@ -116,6 +134,7 @@ fun ListScreen(
                 state.tasks.isEmpty() -> {
                     Text(
                         text = "Список задач пуст",
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
