@@ -13,33 +13,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = Color(0xFF383636)
+    primary = Color(0xFF4F9EFF),        // яркий синий — FAB, акценты
+    onPrimary = Color(0xFF000000),      // иконка на FAB
+    secondary = Color(0xFF7B61FF),      // фиолетовый акцент
+    background = Color(0xFF0F1117),     // почти чёрный фон
+    surface = Color(0xFF1A1D27),        // ботомбар чуть светлее фона
+    onSurface = Color(0xFFE0E0E0),      // иконки навигации
+    onBackground = Color(0xFFFFFFFF),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = Color(0xFFF6F6F6)
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = Color(0xFF2563EB),        // насыщенный синий — FAB, акценты
+    onPrimary = Color(0xFFFFFFFF),      // иконка на FAB
+    secondary = Color(0xFF7C3AED),      // фиолетовый акцент
+    background = Color(0xFFF0F2F8),     // мягкий серо-голубой фон
+    surface = Color(0xFFFFFFFF),        // ботомбар белый
+    onSurface = Color(0xFF374151),      // иконки навигации тёмно-серые
+    onBackground = Color(0xFF111827),
 )
 
 @Composable
 fun ToDoReminderTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
