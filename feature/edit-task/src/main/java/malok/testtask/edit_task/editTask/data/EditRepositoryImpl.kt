@@ -8,7 +8,7 @@ import malok.testtask.core_data.mappers.toDomain
 import malok.testtask.core_data.mappers.toEntity
 import malok.testtask.edit_task.editTask.domain.EditRepository
 
-class EditRepositoryImpl(
+internal class EditRepositoryImpl(
     private val dao: TaskDao
 ) : EditRepository {
 

@@ -15,7 +15,7 @@ import malok.testtask.detail.detail.presentation.model.DetailEffect
 import malok.testtask.detail.detail.presentation.model.DetailIntent
 import malok.testtask.detail.detail.presentation.model.DetailUiState
 
-class DetailViewModel(
+internal class DetailViewModel(
     id: String,
     private val repository: DetailRepository
 ) : ViewModel() {

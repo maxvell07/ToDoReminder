@@ -32,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -46,9 +45,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen(
     onItemClick: (String) -> Unit,
-    onFloatButtonClick: () -> Unit,
-    viewModel: ListViewModel = koinViewModel()
+    onFloatButtonClick: () -> Unit
 ) {
+    val viewModel: ListViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     var selectedTab by remember { mutableStateOf(0) }
     val snackBarHostState = remember { SnackbarHostState() }

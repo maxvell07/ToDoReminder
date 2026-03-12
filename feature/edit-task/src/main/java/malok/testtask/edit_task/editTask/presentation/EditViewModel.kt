@@ -14,7 +14,7 @@ import malok.testtask.edit_task.editTask.presentation.model.EditEffect
 import malok.testtask.edit_task.editTask.presentation.model.EditIntent
 import malok.testtask.edit_task.editTask.presentation.model.EditUiState
 
-class EditViewModel(
+internal class EditViewModel(
     id: String,
     private val repository: EditRepository
 ) : ViewModel() {

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import malok.testtask.detail.detail.presentation.model.DetailUiState
 
 @Composable
-fun DetailContent(
+internal fun DetailContent(
     state: DetailUiState,
     onTaskCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,

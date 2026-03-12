@@ -25,9 +25,9 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun EditTaskScreen(
     id: String,
-    onBack: () -> Unit,
-    viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
+    onBack: () -> Unit
 ) {
+    val viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
 

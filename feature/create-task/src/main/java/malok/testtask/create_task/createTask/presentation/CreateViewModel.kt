@@ -15,7 +15,7 @@ import malok.testtask.create_task.createTask.presentation.model.CreateEffect
 import malok.testtask.create_task.createTask.presentation.model.CreateIntent
 import malok.testtask.create_task.createTask.presentation.model.CreateUiState
 
-class CreateViewModel(
+internal class CreateViewModel(
     private val repository: CreateRepository
 ) : ViewModel() {
 

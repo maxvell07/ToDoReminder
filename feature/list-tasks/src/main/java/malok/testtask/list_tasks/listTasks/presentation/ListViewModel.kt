@@ -13,7 +13,7 @@ import malok.testtask.list_tasks.listTasks.presentation.model.ListEffect
 import malok.testtask.list_tasks.listTasks.presentation.model.ListIntent
 import malok.testtask.list_tasks.listTasks.presentation.model.ListUiState
 
-class ListViewModel(
+internal class ListViewModel(
     private val repository: ListRepository
 ) : ViewModel() {
 

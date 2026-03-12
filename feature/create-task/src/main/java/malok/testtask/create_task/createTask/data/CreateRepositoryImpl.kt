@@ -7,7 +7,7 @@ import malok.testtask.core_data.db.TaskDao
 import malok.testtask.core_data.mappers.toEntity
 import malok.testtask.create_task.createTask.domain.CreateRepository
 
-class CreateRepositoryImpl(
+internal class CreateRepositoryImpl(
     private val dao: TaskDao
 ): CreateRepository {
 

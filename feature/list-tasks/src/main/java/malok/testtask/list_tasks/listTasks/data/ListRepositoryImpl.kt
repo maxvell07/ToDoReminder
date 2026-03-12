@@ -12,7 +12,7 @@ import malok.testtask.core_data.mappers.toDomain
 import malok.testtask.list_tasks.listTasks.domain.ListRepository
 import kotlin.collections.map
 
-class ListRepositoryImpl(
+internal class ListRepositoryImpl(
     private val dao: TaskDao
 ) : ListRepository {
 

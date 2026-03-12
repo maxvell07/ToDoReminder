@@ -19,10 +19,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CreateScreen(
-    onBack: () -> Unit,
-    viewModel: CreateViewModel = koinViewModel()
+    onBack: () -> Unit
 ) {
-
+    val viewModel: CreateViewModel = koinViewModel()
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->

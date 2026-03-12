@@ -33,9 +33,9 @@ import org.koin.core.parameter.parametersOf
 fun DetailScreen(
     id: String,
     onEditClick: (String) -> Unit,
-    viewModel: DetailViewModel = koinViewModel(parameters = { parametersOf(id) }),
     onBack: () -> Unit
 ) {
+    val viewModel: DetailViewModel = koinViewModel(parameters = { parametersOf(id) })
     val task by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()

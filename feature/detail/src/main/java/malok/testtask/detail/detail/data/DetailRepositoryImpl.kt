@@ -10,7 +10,7 @@ import malok.testtask.core_data.db.TaskDao
 import malok.testtask.core_data.mappers.toDomain
 import malok.testtask.detail.detail.domain.DetailRepository
 
-class DetailRepositoryImpl(
+internal class DetailRepositoryImpl(
     private val dao: TaskDao
 ) : DetailRepository {
 
