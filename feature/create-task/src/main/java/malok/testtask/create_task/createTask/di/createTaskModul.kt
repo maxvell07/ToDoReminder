@@ -14,7 +14,8 @@ val createTaskModule = module {
 
     viewModel {
         CreateViewModel(
-            repository = get()
+            repository = get(),
+            scheduler = get()
         )
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import malok.testtask.navigation.AppNavHost
+import malok.todoreminder.core.RequestNotificationPermission
 import malok.todoreminder.ui.theme.ToDoReminderTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,6 +20,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+
+            RequestNotificationPermission()
+
             ToDoReminderTheme {
                 val navController = rememberNavController()
 

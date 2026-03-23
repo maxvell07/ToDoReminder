@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":feature:detail"))
     implementation(project(":feature:create-task"))
     implementation(project(":feature:edit-task"))
+    implementation(project(":feature:notification"))
 
     // Room
     implementation(libs.androidx.room.runtime)
