@@ -25,7 +25,8 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun EditTaskScreen(
     id: String,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onBackHome:() -> Unit
 ) {
     val viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -71,7 +72,7 @@ fun EditTaskScreen(
                 },
                 onDeleteClick = {
                 viewModel.onIntent(EditIntent.DeleteTask(id = id.toLong()))
-                onBack()
+                onBackHome()
                 },
                 onDescriptionChange = {
                     viewModel.onIntent(EditIntent.DescriptionChanged(it))

@@ -86,7 +86,8 @@ fun NavGraphBuilder.listGraph(
         val route = backStackEntry.toRoute<ListRoute.EditTaskScreen>()
         EditTaskScreen(
             id = route.id,
-            onBack = { navController.navigateUp() }
+            onBack = { navController.navigateUp() },
+            onBackHome = {navController.navigate(ListRoute.ListScreen)}
         )
     }
 }

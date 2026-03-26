@@ -41,9 +41,8 @@ internal fun DetailContent(
 
             state.error != null -> {
                 Text(
-                    text = state.error,
+                    text = "Task not found",
                     modifier = Modifier.padding(24.dp),
-                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error
                 )
             }
@@ -109,14 +108,6 @@ internal fun DetailContent(
                         }
                     }
                 }
-            }
-
-            else -> {
-                Text(
-                    text = "Task not found",
-                    modifier = Modifier.padding(24.dp),
-                    color = MaterialTheme.colorScheme.onBackground
-                )
             }
         }
     }
