@@ -45,12 +45,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen(
     onItemClick: (String) -> Unit,
-    onFloatButtonClick: () -> Unit
+    onFloatButtonClick: () -> Unit,
+    onEditSwipe: (String) -> Unit
 ) {
     val viewModel: ListViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
     var selectedTab by remember { mutableStateOf(0) }
     val snackBarHostState = remember { SnackbarHostState() }
+
     LaunchedEffect(Unit) {
         viewModel.effect.collectLatest { effect ->
             when (effect) {
@@ -65,6 +67,7 @@ fun ListScreen(
                         message = effect.message
                     )
                 }
+                is ListEffect.OpenEditTask -> onEditSwipe(effect.id)
             }
         }
     }
@@ -149,23 +152,18 @@ fun ListScreen(
                         ),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        items(state.tasks) { task ->
+                        items(state.tasks, key = { task -> task.id!! }) { task ->
                             ListItem(
                                 task = task,
-                                onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(task.id.toString())) },
-                                onCheckedChange = { id, checked ->
-                                    viewModel.onIntent(
-                                        ListIntent.TaskChecked(
-                                            id,
-                                            checked
-                                        )
-                                    )
-                                }
+                                onItemClick = { viewModel.onIntent(ListIntent.ItemClicked(it)) },
+                                onCheckedChange = { id, checked -> viewModel.onIntent(ListIntent.TaskChecked(id, checked)) },
+                                onEdit = { id -> viewModel.onIntent(ListIntent.onEdit(id)) },
+                                onDelete = { id -> viewModel.onIntent(ListIntent.onDelete(id)) }
                             )
                         }
                     }
                 }
+                }
             }
         }
-    }
 }

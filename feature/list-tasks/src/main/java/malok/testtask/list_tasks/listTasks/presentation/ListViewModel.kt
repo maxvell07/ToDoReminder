@@ -41,6 +41,8 @@ internal class ListViewModel(
             is ListIntent.ItemClicked -> openDetails(intent.id)
             is ListIntent.AddButtonClicked -> openCreateScreen()
             is ListIntent.TaskChecked -> updateTask(intent.id.toLong(), intent.checked)
+            is ListIntent.onEdit -> openEditScreen(intent.id)
+            is ListIntent.onDelete -> deleteTask(intent.id.toLong())
         }
     }
 
@@ -74,5 +76,14 @@ internal class ListViewModel(
         viewModelScope.launch {
             repository.updateStatus(id, checked)
         }
+    }
+
+    private fun deleteTask(id: Long) {
+        viewModelScope.launch {
+            repository.deleteTask(id)
+        }
+    }
+    private fun openEditScreen(id: String) = viewModelScope.launch {
+        _effect.emit(ListEffect.OpenEditTask(id))
     }
 }
