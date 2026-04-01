@@ -8,11 +8,12 @@ import androidx.compose.animation.core.*
 import androidx.compose.animation.core.tween
 @Composable
 fun AppNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: ListRoute
 ) {
     NavHost(
         navController = navController,
-        startDestination = ListRoute.ListScreen,
+        startDestination = startDestination,
         enterTransition = {
             slideInHorizontally(
                 initialOffsetX = { fullWidth -> fullWidth },

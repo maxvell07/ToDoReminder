@@ -9,6 +9,9 @@ sealed interface ListRoute {
     data object ListScreen : ListRoute
 
     @Serializable
+    data object Onboarding : ListRoute
+
+    @Serializable
     data class DetailScreen(val id: String) : ListRoute
 
     @Serializable

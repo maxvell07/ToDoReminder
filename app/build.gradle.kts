@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":feature:detail"))
     implementation(project(":feature:create-task"))
     implementation(project(":feature:edit-task"))
+    implementation(project(":feature:onBoarding"))
     implementation(project(":feature:notification"))
 
     // Room
@@ -66,13 +67,15 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-
+    implementation(libs.koin.androidx.compose)
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
+
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.core.ktx)

@@ -1,8 +1,6 @@
 package malok.todoreminder.ui.theme
 
-import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -34,7 +32,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun ToDoReminderTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

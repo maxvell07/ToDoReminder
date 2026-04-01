@@ -3,7 +3,7 @@ package malok.testtask.notification.data.worker
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import malok.testtask.core.domain.TaskRepository
+import malok.testtask.core.domain.repositories.TaskRepository
 import malok.testtask.notification.domain.NotificationScheduler
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,7 +19,6 @@ class RestoreAlarmsWorker( //TODO надо подключить
     override suspend fun doWork(): Result {
         return try {
             val now = System.currentTimeMillis()
-            // Получаем активные задачи
             val tasks = repository.getTasksWithDueTimeAfter(now)
 
             tasks.forEach { task ->

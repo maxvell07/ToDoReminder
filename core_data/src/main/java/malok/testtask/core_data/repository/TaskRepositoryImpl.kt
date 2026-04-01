@@ -1,7 +1,7 @@
 package malok.testtask.core_data.repository
 
 import malok.testtask.core.domain.Task
-import malok.testtask.core.domain.TaskRepository
+import malok.testtask.core.domain.repositories.TaskRepository
 import malok.testtask.core_data.db.TaskDao
 import malok.testtask.core_data.mappers.toDomain
 

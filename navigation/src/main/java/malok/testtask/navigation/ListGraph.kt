@@ -11,6 +11,7 @@ import malok.testtask.list_tasks.listTasks.presentation.ListScreen
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.animation.core.tween
+import malok.testtask.onboarding.presentation.OnboardingScreen
 
 fun NavGraphBuilder.listGraph(
     navController: NavController
@@ -25,6 +26,15 @@ fun NavGraphBuilder.listGraph(
                 }
             }
         )
+    }
+
+    composable<ListRoute.Onboarding> {
+        OnboardingScreen(
+            onFinish = {
+                navController.navigate(ListRoute.ListScreen) {
+                    popUpTo(ListRoute.Onboarding) { inclusive = true }
+                }
+        })
     }
     composable<ListRoute.DetailScreen>(
         enterTransition = {
