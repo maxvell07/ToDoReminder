@@ -38,10 +38,30 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-}
+        implementation(project(":core_domain"))
+        implementation(project(":core_ui"))
+        implementation(project(":core_data"))
+
+        implementation(libs.androidx.compose.material.icons.core)
+        implementation(libs.androidx.compose.material.icons.extended)
+        implementation(platform(libs.koin.bom))
+        implementation(libs.koin.core)
+        implementation(libs.koin.android)
+        implementation(libs.koin.androidx.compose)
+
+        implementation(libs.androidx.activity.compose)
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.androidx.compose.ui)
+        implementation(libs.androidx.compose.ui.graphics)
+        implementation(libs.androidx.compose.ui.tooling.preview)
+        implementation(libs.androidx.compose.material3)
+
+        implementation(libs.androidx.compose.material3)
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.appcompat)
+        implementation(libs.material)
+
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.androidx.junit)
+        androidTestImplementation(libs.androidx.espresso.core)
+    }

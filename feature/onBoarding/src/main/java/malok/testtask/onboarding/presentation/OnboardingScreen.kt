@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import malok.testtask.onboarding.presentation.ui.ThemeCard
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

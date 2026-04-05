@@ -1,5 +1,7 @@
-package malok.testtask.navigation
+package malok.testtask.navigation.graphs
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -7,36 +9,13 @@ import androidx.navigation.toRoute
 import malok.testtask.create_task.createTask.presentation.CreateScreen
 import malok.testtask.detail.detail.presentation.DetailScreen
 import malok.testtask.edit_task.editTask.presentation.EditTaskScreen
-import malok.testtask.list_tasks.listTasks.presentation.ListScreen
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.compose.animation.core.tween
-import malok.testtask.onboarding.presentation.OnboardingScreen
+import malok.testtask.navigation.routes.AppRoute
+import malok.testtask.navigation.routes.GlobalRoute
 
-fun NavGraphBuilder.listGraph(
+fun NavGraphBuilder.globalGraph(
     navController: NavController
 ) {
-    composable<ListRoute.ListScreen> {
-        ListScreen(
-            onItemClick = { id -> navController.navigate(ListRoute.DetailScreen(id)) },
-            onFloatButtonClick = { navController.navigate(ListRoute.CreateScreen()) },
-            onEditSwipe = { id ->
-                navController.navigate(ListRoute.EditTaskScreen(id)) {
-                    launchSingleTop = true
-                }
-            }
-        )
-    }
-
-    composable<ListRoute.Onboarding> {
-        OnboardingScreen(
-            onFinish = {
-                navController.navigate(ListRoute.ListScreen) {
-                    popUpTo(ListRoute.Onboarding) { inclusive = true }
-                }
-        })
-    }
-    composable<ListRoute.DetailScreen>(
+    composable<GlobalRoute.Detail>(
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Start,
@@ -56,15 +35,15 @@ fun NavGraphBuilder.listGraph(
             slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End) + fadeIn()
         }
     ) { backStackEntry ->
-        val route = backStackEntry.toRoute<ListRoute.DetailScreen>()
+        val route = backStackEntry.toRoute<GlobalRoute.Detail>()
         DetailScreen(
             id = route.id,
-            onEditClick = { id -> navController.navigate(ListRoute.EditTaskScreen(id)) },
+            onEditClick = { id -> navController.navigate(GlobalRoute.Edit(id)) },
             onBack = { navController.navigateUp() }
         )
     }
 
-    composable<ListRoute.CreateScreen>(
+    composable<GlobalRoute.Create>(
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Up,
@@ -83,7 +62,7 @@ fun NavGraphBuilder.listGraph(
         CreateScreen(onBack = { navController.navigateUp() })
     }
 
-    composable<ListRoute.EditTaskScreen>(
+    composable<GlobalRoute.Edit>(
         enterTransition = {
             scaleIn(initialScale = 0.94f, animationSpec = tween(400)) +
                     fadeIn(animationSpec = tween(300))
@@ -93,11 +72,17 @@ fun NavGraphBuilder.listGraph(
                     fadeOut(animationSpec = tween(280))
         }
     ) { backStackEntry ->
-        val route = backStackEntry.toRoute<ListRoute.EditTaskScreen>()
+        val route = backStackEntry.toRoute<GlobalRoute.Edit>()
         EditTaskScreen(
             id = route.id,
             onBack = { navController.navigateUp() },
-            onBackHome = {navController.navigate(ListRoute.ListScreen)}
+            onBackHome = {
+                // Возвращаемся в MainGraph
+                navController.popBackStack(
+                    route = AppRoute.MainGraph,
+                    inclusive = false
+                )
+            }
         )
     }
 }

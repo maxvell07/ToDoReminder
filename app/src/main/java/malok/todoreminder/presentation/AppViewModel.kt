@@ -8,28 +8,28 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import malok.testtask.core.domain.GetOnboardingStateUseCase
 import malok.testtask.core.domain.GetThemeUseCase
-import malok.testtask.navigation.ListRoute
+import malok.testtask.navigation.routes.AppRoute
 
 class AppViewModel(
     getOnboardingStateUseCase: GetOnboardingStateUseCase,
     getThemeUseCase: GetThemeUseCase
 ) : ViewModel() {
 
-    val startDestination: StateFlow<ListRoute> = getOnboardingStateUseCase()
+    val startDestination: StateFlow<AppRoute?> = getOnboardingStateUseCase()
         .map { completed ->
-            if (completed) ListRoute.ListScreen else ListRoute.Onboarding
+            if (completed) AppRoute.MainGraph else AppRoute.AuthGraph
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            ListRoute.ListScreen
+            null
         )
 
-    val theme: StateFlow<Boolean> = getThemeUseCase()
+    val theme: StateFlow<Boolean?> = getThemeUseCase()
         .map { theme -> theme == "dark" }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            false
+            initialValue = null
         )
 }

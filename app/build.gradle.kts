@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":feature:onBoarding"))
     implementation(project(":feature:notification"))
 
+    implementation("androidx.core:core-splashscreen:1.2.0")
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

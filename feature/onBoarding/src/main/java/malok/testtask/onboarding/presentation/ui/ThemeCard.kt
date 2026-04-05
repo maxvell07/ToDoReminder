@@ -1,4 +1,4 @@
-package malok.testtask.onboarding.presentation
+package malok.testtask.onboarding.presentation.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box

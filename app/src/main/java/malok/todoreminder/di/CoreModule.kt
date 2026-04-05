@@ -8,6 +8,10 @@ import malok.testtask.core.domain.repositories.TaskRepository
 import malok.testtask.core_data.preferences.PreferencesDataStore
 import malok.testtask.core_data.repository.TaskRepositoryImpl
 import androidx.datastore.preferences.core.Preferences
+import malok.testtask.core.domain.CompleteOnboardingUseCase
+import malok.testtask.core.domain.GetOnboardingStateUseCase
+import malok.testtask.core.domain.GetThemeUseCase
+import malok.testtask.core.domain.SetThemeUseCase
 import malok.testtask.core.domain.repositories.PrefRepository
 import malok.testtask.core_data.preferences.dataStore
 import malok.testtask.core_data.repository.PrefRepositoryImpl
@@ -36,6 +40,11 @@ val coreModule = module {
     single<TaskRepository> {
         TaskRepositoryImpl(get())
     }
+    single { GetOnboardingStateUseCase(get()) }
+    single { CompleteOnboardingUseCase(get()) }
+    single { SetThemeUseCase(get()) }
+    single { GetThemeUseCase(get()) }
+
     single<DataStore<Preferences>> {
         androidContext().dataStore
     }
