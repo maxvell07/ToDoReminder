@@ -28,7 +28,7 @@ import malok.testtask.profile.presentation.ProfileScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(appNavController: NavController) {
+fun MainScreen(appNavController: NavController ) {
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
