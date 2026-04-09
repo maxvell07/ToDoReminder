@@ -1,4 +1,4 @@
-package malok.testtask.core_ui
+package malok.testtask.core_ui.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

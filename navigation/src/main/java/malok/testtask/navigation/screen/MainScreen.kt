@@ -20,7 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import malok.testtask.core_ui.CustomBottomNavBar
+import malok.testtask.core_ui.ui.CustomBottomNavBar
 import malok.testtask.list_tasks.listTasks.presentation.ListScreen
 import malok.testtask.navigation.routes.GlobalRoute
 import malok.testtask.navigation.routes.MainTabRoute
@@ -107,6 +107,7 @@ fun MainScreen(appNavController: NavController ) {
         ) {
             composable<MainTabRoute.List> {
                 ListScreen(
+                    modifier = Modifier,
                     onItemClick = { id ->
                         appNavController.navigate(GlobalRoute.Detail(id))
                     },

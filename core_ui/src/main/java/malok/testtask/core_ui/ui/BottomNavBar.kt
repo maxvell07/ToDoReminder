@@ -1,4 +1,4 @@
-package malok.testtask.core_ui
+package malok.testtask.core_ui.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

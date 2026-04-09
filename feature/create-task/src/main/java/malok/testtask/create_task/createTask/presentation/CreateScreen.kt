@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import malok.testtask.core_ui.TaskFormContent
+import malok.testtask.core_ui.ui.TaskFormContent
 import malok.testtask.create_task.createTask.presentation.model.CreateEffect
 import malok.testtask.create_task.createTask.presentation.model.CreateIntent
 import org.koin.androidx.compose.koinViewModel

@@ -1,4 +1,4 @@
-package malok.testtask.core_ui
+package malok.testtask.core_ui.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

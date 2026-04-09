@@ -1,4 +1,4 @@
-package malok.testtask.core_ui
+package malok.testtask.core_ui.ui
 
 import android.icu.util.Calendar
 import androidx.annotation.StringRes
@@ -40,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import malok.testtask.core_ui.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone

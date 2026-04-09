@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import malok.testtask.core.domain.model.MenuItem
 import malok.testtask.list_tasks.listTasks.domain.ListRepository
 import malok.testtask.list_tasks.listTasks.presentation.model.ListEffect
 import malok.testtask.list_tasks.listTasks.presentation.model.ListIntent
@@ -31,6 +32,12 @@ internal class ListViewModel(
         )
     )
     val state = _state.asStateFlow()
+
+    val menuItems: List<MenuItem> = listOf(
+        MenuItem("Users",  "person",       "users_screen",  "API Users"),
+        MenuItem("Posts",  "article",      "posts_screen",  "API Posts"),
+        MenuItem("Todos",  "check_circle", "todos_screen"),
+    )
 
     init {
         onIntent(ListIntent.LoadTasks)
