@@ -49,6 +49,7 @@ internal class ListViewModel(
             is ListIntent.TaskChecked -> updateTask(intent.id.toLong(), intent.checked)
             is ListIntent.onEdit -> openEditScreen(intent.id)
             is ListIntent.onDelete -> deleteTask(intent.id.toLong())
+            is ListIntent.OpenNetworkResource -> openResource(intent.path)
         }
     }
 
@@ -63,6 +64,11 @@ internal class ListViewModel(
                 _state.update { it.copy(tasks = emptyList(), isLoading = false, error = e.message) }
                 _effect.emit(ListEffect.ShowError(e.message ?: "Unknown error"))
             }
+        }
+    }
+    private fun openResource(path: String){
+        viewModelScope.launch {
+            _effect.emit(ListEffect.OpenResource(path))
         }
     }
 

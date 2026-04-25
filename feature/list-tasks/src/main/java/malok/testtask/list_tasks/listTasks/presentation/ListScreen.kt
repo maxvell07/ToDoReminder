@@ -35,7 +35,8 @@ fun ListScreen(
     modifier: Modifier,
     snackbarHostState: SnackbarHostState,
     onItemClick: (String) -> Unit,
-    onEditSwipe: (String) -> Unit
+    onEditSwipe: (String) -> Unit,
+    onResourceClick: (String) -> Unit
 ) {
     val viewModel: ListViewModel = koinViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -47,6 +48,7 @@ fun ListScreen(
                 is ListEffect.OpenDetails -> onItemClick(effect.id)
                 is ListEffect.ShowError -> snackbarHostState.showSnackbar(effect.message)
                 is ListEffect.OpenEditTask -> onEditSwipe(effect.id)
+                is ListEffect.OpenResource -> onResourceClick(effect.path)
             }
         }
     }
@@ -77,7 +79,7 @@ fun ListScreen(
                     Spacer(modifier = Modifier.size(20.dp))
                     HorizontalMenu(
                         menuItems,
-                        onItemClick,
+                        onResourceClick,
                         modifier = Modifier
                     )
                     HorizontalDivider(

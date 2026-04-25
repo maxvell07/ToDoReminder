@@ -41,7 +41,6 @@ fun MainScreen(appNavController: NavController ) {
         currentDestination?.hierarchy?.any {
             it.hasRoute(MainTabRoute.Profile::class)
         } == true -> 1
-
         else -> 0
     }
 
@@ -115,6 +114,12 @@ fun MainScreen(appNavController: NavController ) {
                     onEditSwipe = { id ->
                         appNavController.navigate(GlobalRoute.Edit(id)) {
                             launchSingleTop = true
+                        }
+                    } ,
+                    onResourceClick= { path ->
+                        when (path) {
+                            "first" -> Unit//appNavController.navigate()// ....
+                            else -> Unit
                         }
                     }
                 )
