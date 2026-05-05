@@ -7,4 +7,7 @@ interface ListRepository {
     fun observeTasks(): Flow<List<Task>>
 
     suspend fun updateStatus(id: Long, check: Boolean)
+
+    suspend fun deleteTask(id:Long)
+
 }

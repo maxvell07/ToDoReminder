@@ -1,0 +1,35 @@
+package malok.todoreminder.presentation
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import malok.testtask.core.domain.GetOnboardingStateUseCase
+import malok.testtask.core.domain.GetThemeUseCase
+import malok.testtask.navigation.routes.AppRoute
+
+class AppViewModel(
+    getOnboardingStateUseCase: GetOnboardingStateUseCase,
+    getThemeUseCase: GetThemeUseCase
+) : ViewModel() {
+
+    val startDestination: StateFlow<AppRoute?> = getOnboardingStateUseCase()
+        .map { completed ->
+            if (completed) AppRoute.MainGraph else AppRoute.AuthGraph
+        }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            null
+        )
+
+    val theme: StateFlow<Boolean?> = getThemeUseCase()
+        .map { theme -> theme == "dark" }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
+}

@@ -55,7 +55,11 @@ dependencies {
     implementation(project(":feature:detail"))
     implementation(project(":feature:create-task"))
     implementation(project(":feature:edit-task"))
+    implementation(project(":feature:onBoarding"))
+    implementation(project(":feature:notification"))
+    implementation(project(":feature:profile"))
 
+    implementation(libs.androidx.core.splashscreen)
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
@@ -65,7 +69,7 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-
+    implementation(libs.koin.androidx.compose)
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
@@ -73,10 +77,16 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
 
+    implementation(libs.androidx.datastore.preferences)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

@@ -1,5 +1,6 @@
 package malok.testtask.create_task.createTask.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,12 +15,19 @@ import malok.testtask.create_task.createTask.domain.CreateRepository
 import malok.testtask.create_task.createTask.presentation.model.CreateEffect
 import malok.testtask.create_task.createTask.presentation.model.CreateIntent
 import malok.testtask.create_task.createTask.presentation.model.CreateUiState
+import malok.testtask.notification.domain.NotificationScheduler
 
-class CreateViewModel(
-    private val repository: CreateRepository
+internal class CreateViewModel(
+    private val repository: CreateRepository,
+    private val scheduler: NotificationScheduler
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(CreateUiState(isLoading = false, task = Task(date = System.currentTimeMillis())))
+    private val _state = MutableStateFlow(
+        CreateUiState(
+            isLoading = false,
+            task = Task(date = System.currentTimeMillis())
+        )
+    )
     val state: StateFlow<CreateUiState> = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<CreateEffect>(
@@ -65,7 +73,20 @@ class CreateViewModel(
             _state.update { it.copy(isLoading = true, error = null) }
 
             try {
-                repository.createTask(task)
+                // Сохраняем и получаем реальный ID из базы
+                val newTaskId = repository.createTask(task)
+                Log.d("ALARM_DEBUG", "Task saved with ID: $newTaskId") // ДОБАВИТЬ
+
+                val savedTask = task.copy(id = newTaskId)
+
+                if (savedTask.date > 0 && savedTask.date > System.currentTimeMillis()) {
+                    try {
+                        scheduler.schedule(savedTask)
+                        Log.d("ALARM_DEBUG", "Scheduler.schedule() called successfully") // ДОБАВИТЬ
+                    } catch (e: Exception) {
+                        Log.e("ALARM_DEBUG", "Failed to schedule: ${e.message}") // ДОБАВИТЬ
+                    }
+                }
                 _effect.emit(CreateEffect.TaskCreated("Task Created"))
             } catch (e: Exception) {
                 _state.update {

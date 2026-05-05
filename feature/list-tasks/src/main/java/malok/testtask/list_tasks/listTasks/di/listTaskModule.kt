@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val listTasksModule = module {
 
     single<ListRepository> {
-        _root_ide_package_.malok.testtask.list_tasks.listTasks.data.ListRepositoryImpl(get())
+        ListRepositoryImpl(get())
     }
 
     viewModel {

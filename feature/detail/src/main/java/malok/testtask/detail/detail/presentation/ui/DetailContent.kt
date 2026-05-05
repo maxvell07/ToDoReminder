@@ -1,6 +1,5 @@
 package malok.testtask.detail.detail.presentation.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -23,10 +21,9 @@ import androidx.compose.ui.unit.dp
 import malok.testtask.detail.detail.presentation.model.DetailUiState
 
 @Composable
-fun DetailContent(
+internal fun DetailContent(
     state: DetailUiState,
     onTaskCheckedChange: (Boolean) -> Unit,
-    onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -37,15 +34,16 @@ fun DetailContent(
         when {
             state.isLoading -> {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(80.dp),
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
             state.error != null -> {
                 Text(
-                    text = state.error,
+                    text = "Task not found",
                     modifier = Modifier.padding(24.dp),
-                    style = MaterialTheme.typography.bodyLarge
+                    color = MaterialTheme.colorScheme.error
                 )
             }
 
@@ -57,14 +55,17 @@ fun DetailContent(
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+
                         Text(
                             text = task.title,
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            color = MaterialTheme.colorScheme.onBackground
                         )
 
                         Checkbox(
@@ -77,12 +78,16 @@ fun DetailContent(
 
                     Text(
                         text = "Description:",
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     Text(
                         text = task.description,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
@@ -90,34 +95,19 @@ fun DetailContent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                            .height(48.dp)
                     ) {
-                        Button(
-                            onClick = onDeleteClick,
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.error
-                            )
-                        ) {
-                            Text("Delete")
-                        }
-
                         Button(
                             onClick = onEditClick,
                             modifier = Modifier.weight(1f)
                         ) {
-                            Text("Edit")
+                            Text(
+                                "Edit",
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
                         }
                     }
                 }
-            }
-
-            else -> {
-                Text(
-                    text = "Task not found",
-                    modifier = Modifier.padding(24.dp)
-                )
             }
         }
     }

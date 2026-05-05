@@ -45,7 +45,20 @@ dependencies {
     implementation(project(":feature:detail"))
     implementation(project(":feature:create-task"))
     implementation(project(":feature:edit-task"))
+    implementation(project(":feature:onBoarding"))
+    implementation(project(":feature:profile"))
 
+    implementation(project(":core_ui"))
+
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+
+    implementation(libs.androidx.compose.animation)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
 

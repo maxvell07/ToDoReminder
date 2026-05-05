@@ -5,6 +5,6 @@ import malok.testtask.core.domain.Task
 
 interface CreateRepository {
 
-    suspend fun createTask(task: Task)
+    suspend fun createTask(task: Task): Long
 
 }

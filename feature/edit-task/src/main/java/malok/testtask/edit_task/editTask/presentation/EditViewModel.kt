@@ -14,7 +14,7 @@ import malok.testtask.edit_task.editTask.presentation.model.EditEffect
 import malok.testtask.edit_task.editTask.presentation.model.EditIntent
 import malok.testtask.edit_task.editTask.presentation.model.EditUiState
 
-class EditViewModel(
+internal class EditViewModel(
     id: String,
     private val repository: EditRepository
 ) : ViewModel() {
@@ -44,6 +44,8 @@ class EditViewModel(
 
             EditIntent.SaveTask ->
                 saveTask()
+
+            is EditIntent.DeleteTask -> deleteTask(intent.id)
         }
     }
 
@@ -73,6 +75,11 @@ class EditViewModel(
                     )
                 }
             }
+        }
+    }
+    fun deleteTask(id: Long) {
+        viewModelScope.launch {
+            repository.deleteTask(id)
         }
     }
 

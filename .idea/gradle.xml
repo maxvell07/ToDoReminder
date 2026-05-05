@@ -19,6 +19,9 @@
             <option value="$PROJECT_DIR$/feature/detail" />
             <option value="$PROJECT_DIR$/feature/edit-task" />
             <option value="$PROJECT_DIR$/feature/list-tasks" />
+            <option value="$PROJECT_DIR$/feature/notification" />
+            <option value="$PROJECT_DIR$/feature/onBoarding" />
+            <option value="$PROJECT_DIR$/feature/profile" />
             <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>

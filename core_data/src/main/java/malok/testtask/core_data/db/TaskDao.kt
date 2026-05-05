@@ -13,7 +13,6 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE id = :id")
     fun observeTaskById(id: Long): Flow<TaskEntity>
 
-
     @Query("SELECT * FROM tasks")
     fun observeTasks(): Flow<List<TaskEntity>>
 
@@ -21,7 +20,7 @@ interface TaskDao {
     suspend fun getTaskById(id: Long): TaskEntity?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun createTask(task: TaskEntity)
+    suspend fun createTask(task: TaskEntity): Long
 
     @Query("UPDATE tasks SET isDone = :isDone WHERE id = :taskId")
     suspend fun updateTaskDone(
@@ -34,4 +33,7 @@ interface TaskDao {
 
     @Update
     suspend fun updateTask(task: TaskEntity)
+
+    @Query("SELECT * FROM tasks WHERE date > :timeMillis AND isDone = 0")
+    suspend fun getTasksWithDueTimeAfter(timeMillis: Long): List<TaskEntity>
 }

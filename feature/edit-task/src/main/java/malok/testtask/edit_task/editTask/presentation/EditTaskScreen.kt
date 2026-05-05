@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import malok.testtask.core_ui.TaskFormContent
+import malok.testtask.core_ui.ui.TaskFormContent
 import malok.testtask.edit_task.editTask.presentation.model.EditEffect
 import malok.testtask.edit_task.editTask.presentation.model.EditIntent
 import org.koin.androidx.compose.koinViewModel
@@ -26,8 +26,9 @@ import org.koin.core.parameter.parametersOf
 fun EditTaskScreen(
     id: String,
     onBack: () -> Unit,
-    viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
+    onBackHome:() -> Unit
 ) {
+    val viewModel: EditViewModel = koinViewModel(parameters = { parametersOf(id) })
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
 
@@ -68,6 +69,10 @@ fun EditTaskScreen(
                 buttonText = "Save",
                 onTitleChange = {
                     viewModel.onIntent(EditIntent.TitleChanged(it))
+                },
+                onDeleteClick = {
+                viewModel.onIntent(EditIntent.DeleteTask(id = id.toLong()))
+                onBackHome()
                 },
                 onDescriptionChange = {
                     viewModel.onIntent(EditIntent.DescriptionChanged(it))

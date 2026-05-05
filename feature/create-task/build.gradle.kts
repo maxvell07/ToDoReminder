@@ -44,6 +44,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 dependencies {
 
+
+    implementation(project(":feature:notification")) // <--- ВАЖНО
     implementation(project(":core_domain"))
     implementation(project(":core_ui"))
     implementation(project(":core_data"))

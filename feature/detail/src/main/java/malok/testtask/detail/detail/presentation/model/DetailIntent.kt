@@ -1,6 +1,6 @@
 package malok.testtask.detail.detail.presentation.model
 
-sealed interface DetailIntent {
+internal sealed interface DetailIntent {
     data class LoadTask(val id: Long) : DetailIntent
     data class EditClicked(val id: String) : DetailIntent
     data class DeleteTask(val id: Long) : DetailIntent
